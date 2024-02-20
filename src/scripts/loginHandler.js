@@ -1,4 +1,6 @@
 import { loginLayout } from "../components/loginPage.js";
+import { profilePage } from "../components/profilePage.js";
+import { fetchData } from "./fetchData.js";
 
 export const loginHandler = () => {
   let body = document.querySelector("body");
@@ -36,6 +38,7 @@ async function loginFetch() {
     const data = await response.json();
 
     if (!data.error) {
+      console.log(data);
       console.log("sdfdsf");
       //   window.jwt = data;
       //   setCookie("jwToken", window.jwt, 1);
@@ -43,7 +46,10 @@ async function loginFetch() {
       //   const loginPage = document.querySelector(".loginDiv");
       //   loginPage.remove();
 
-      //   homePage();
+      // homePage();
+      let body = document.querySelector("body")
+      body.innerHTML = profilePage()
+      fetchData(data)
       //   getData(window.jwt);
     } else {
       const error = document.querySelector(".errorMsg");
