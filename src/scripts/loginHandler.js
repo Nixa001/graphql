@@ -39,18 +39,9 @@ async function loginFetch() {
 
     if (!data.error) {
       console.log(data);
-      console.log("sdfdsf");
-      //   window.jwt = data;
-      //   setCookie("jwToken", window.jwt, 1);
-
-      //   const loginPage = document.querySelector(".loginDiv");
-      //   loginPage.remove();
-
-      // homePage();
       let body = document.querySelector("body")
       body.innerHTML = profilePage()
       fetchData(data)
-      //   getData(window.jwt);
     } else {
       const error = document.querySelector(".errorMsg");
       error.style.display = "block";

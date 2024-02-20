@@ -41,6 +41,7 @@ export const profilePage = () => {
         </div>
         <div class="sectionDiv2 div2FirstSection">
         <h3> Best skills</h3>
+        <svg width="500" height="500" id="radar-chart"></svg>
        </div>
     </section>
     <section class="secondSection">

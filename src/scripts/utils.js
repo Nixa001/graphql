@@ -54,5 +54,16 @@ query {
       }
       }
   }
+  # transaction pour recuperer les skills
+
+ skills: transaction_aggregate(
+    where: {event: {registrationId: {_eq: 55}}, type: {_ilike: "skill_%" }},
+    order_by: {amount: desc} 
+) {
+  nodes{
+    type
+    amount
+  }
+}
 }
 `
