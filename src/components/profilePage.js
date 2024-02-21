@@ -24,17 +24,35 @@ export const profilePage = () => {
             <div class="contentDiv1">
                 <div class="cart cart1">
                     <h3>XP</h3>
+                    <img src="./styles/assets/xpa.png" alt="" srcset="">
+
                     <h2 class="xp"></h2>
+
+                </div>
+
+                <div class="cart cart3">
+                    <h3>Audits ratio</h3>
+                    <img src="./styles/assets/ratios.png" alt="" srcset="">
+                    <h2 class="ratio"></h2>
 
                 </div>
                 <div class="cart cart2">
                     <h3>Level</h3>
-                    <h2 class="level"></h2>
-
-                </div>
-                <div class="cart cart3">
-                    <h3>Audits ratio</h3>
-                    <h2 class="ratio"></h2>
+                    <svg id="doughnut-chart" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                      <!-- Cercle extérieur (anneau) -->
+                      <circle cx="50%" cy="50%" r="30%" stroke="#ff993f50" stroke-width="2%" fill="none" />
+                    
+                      <!-- Arc représentant le niveau -->
+                      <circle id="progress-circle" cx="0%" cy="50%" r="30%" stroke="#ff983f" stroke-width="5%" fill="none"
+                        stroke-dasharray="0 251" 
+                        stroke-dashoffset="0"
+                        transform="rotate(-90 50 50)"
+                      />
+                    
+                      <!-- Texte pour afficher le niveau -->
+                      <text id="level-text" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="30px" fill="#e0e0e0">
+                        0
+                      </text>
 
                 </div>
             </div>
@@ -46,9 +64,22 @@ export const profilePage = () => {
     </section>
     <section class="secondSection">
         <div class="sectionDiv div1SecondSection">
-        <h3>Graph projects XP</h3> </div>
+        <h3>Best XP Projects Chart</h3> </div>
         <div class="sectionDiv2 div2SecondSection">
-        <h3>Other</h3>
+        <h3>Projects transaction</h3>
+
+    <table class="content-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Project name</th>
+        <th>XP</th>
+        <th>State</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
         </div>
     </section>
     

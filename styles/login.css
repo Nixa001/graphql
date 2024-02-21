@@ -1,0 +1,48 @@
+.logindiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.logindiv .title_login{
+    font-size: 50px;
+    color: var(--text-100);
+}
+.logindiv h2{
+    background: var(--backgroundColor);
+}
+.form {
+}
+input{
+    height: 60px;
+    width: 350px;
+    margin: 2px 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 20px;
+    border: thin solid rgba(128, 128, 128, 0.137);
+}
+.form__input{
+    color: var(--text-100);
+    background: var(--backgroundColor);
+}
+.submit_login{
+    background: var(--primary-200);
+    color: var(--text-100);
+    border: transparent;
+}
+.submit_login:hover{
+    cursor: pointer;
+    background: var(--primary-100);
+
+}
+.form__input:focus{
+    outline: none;
+}
+.errorMsg{
+    background: var(--backgroundColor);
+    color:#f63d5e ;
+    text-align: center;
+font-size: 16px;
+}

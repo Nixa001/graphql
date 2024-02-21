@@ -1,3 +1,4 @@
+import { chartRadar, createSVGGraph, createTab } from "./chartSVG.js";
 import { QueryUserData } from "./utils.js";
 
 export const fetchData = (jwt) => {
@@ -30,29 +31,29 @@ export const fetchData = (jwt) => {
                     // console.log(element.invalidAudits);
                     let level = user[0].level
                     infoUserConnect(
-                        element.firstName,
-                        element.lastName,
+                        element.firstName.toUpperCase(),
+                        element.lastName.toUpperCase(),
                         element.login,
-                        element.campus,
+                        element.campus.toUpperCase(),
                         element.auditRatio,
                         level[0].level
                     );
                     element.level.forEach((el) => {
                         level.innerHTML = el.level
                     })
-                    // let projetValides = element.projetValides
-                    // createTab(projetValides)
-                    console.log(data.data.transaction_aggregate.nodes[0].amount);
+                    console.log(data.data.transaction_aggregate.nodes);
+                    createTab(data.data.transaction_aggregate.nodes)
                 });
                 let XPval = data.data.transaction_aggregate.aggregate.sum.amount / 1000;
-                console.log(XPval.toFixed(0));
                 let nbrXp = document.querySelector(".xp");
-                nbrXp.innerHTML = XPval.toFixed(0) + " KB";
+                nbrXp.style.color = "#ff983f"
+                nbrXp.innerHTML = XPval.toFixed(0) + "KB";
                 resolve(user);
                 createSVGGraph(data.data.transaction_aggregate.nodes)
                 const aggregatedData = aggregateSkills(data.data.skills);
                 chartRadar(aggregatedData)
-                console.log(aggregatedData);
+                console.log(data.data.upRatio.aggregate.sum.amount);
+                console.log(data.data.downRatio.aggregate.sum.amount);
             })
             .catch((error) => {
                 reject(error);
@@ -60,19 +61,6 @@ export const fetchData = (jwt) => {
     });
 };
 
-// const createTab = (projetValides) => {
-//     projetValides.forEach(projet => {
-//         let name = projet.object.name
-//         let tableProject = document.querySelector("tbody")
-//         let line = document.createElement("tr")
-//         let column = document.createElement("td")
-//         column.innerText = name
-//         line.appendChild(column)
-//         tableProject.appendChild(line)
-//         // console.log(name);
-
-//     });
-// }
 
 const infoUserConnect = (
     firstName,
@@ -91,60 +79,36 @@ const infoUserConnect = (
     gitea.innerHTML = " @" + userName;
     campusDiv.innerHTML = campus;
     if (auditRatio >= 1) {
-        ratio.style.color = "green"
+        ratio.style.color = "#17ae3e"
     } else if (auditRatio > 0.6) {
         ratio.style.color = "orange"
     } else {
         ratio.style.color = "red"
     }
     ratio.innerHTML = auditRatio.toFixed(1);
-    level.innerHTML = myLevel
+    // level.innerHTML = myLevel
+    updateDoughnutChart(myLevel)
 };
+function updateDoughnutChart(level) {
+    //perimetre avec rayon 30
+    const circumference = 377;
+    const progress = (level / 50) * circumference;
 
-function createSVGGraph(data) {
-    // Créer dynamiquement un SVG basé sur les données
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', '100%');
-    svg.setAttribute('viewBox', '0 0 1500 400'); 
-    const maxAmount = Math.max(...data.map(item => item.amount));
-    const scaleFactor = 100 / maxAmount;
+    // attribut
+    const progressCircle = document.getElementById('progress-circle');
+    progressCircle.setAttribute('stroke-dasharray', `${progress} ${circumference - progress}`);
+    progressCircle.setAttribute('stroke-dashoffset', -circumference + 1 / 4);
 
-    data.forEach((item, index) => {
-        if (index < 15) {
-            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            rect.setAttribute('x', index * 100); 
-            rect.setAttribute('y', 70 - item.amount * scaleFactor);
-            rect.setAttribute('width', 80); 
-            rect.setAttribute('height', item.amount * scaleFactor + 400);
-            rect.setAttribute('fill', '#e0e0e0');
-
-            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            text.setAttribute('x', index * 50 + 11.5); 
-            text.setAttribute('y', 100);
-            text.setAttribute('text-anchor', 'middle');
-            text.textContent = item.object.name;
-
-            svg.appendChild(rect);
-            // svg.appendChild(text);
-        }
-    });
-
-    const container = document.querySelector('.div1SecondSection');
-    container.appendChild(svg);
-
-    container.addEventListener('resize', () => {
-        const parentWidth = container.clientWidth;
-        const parentHeight = container.clientHeight;
-        svg.setAttribute('viewBox', `0 0 ${parentWidth} ${parentHeight}`);
-    });
+    // text
+    const levelText = document.getElementById('level-text');
+    levelText.textContent = level;
 }
+
 
 export function aggregateSkills(data) {
     const aggregatedSkills = {};
     data.nodes.forEach(item => {
-        const skillType = item.type;
-
+        const skillType = item.type.slice(6).toUpperCase();
         if (!aggregatedSkills[skillType] || item.amount > aggregatedSkills[skillType]) {
             aggregatedSkills[skillType] = item.amount;
         }
@@ -159,56 +123,3 @@ export function aggregateSkills(data) {
     return result;
 }
 
-
-function chartRadar(data) {
-    
-    const width = 600;
-    const height = 400;
-    const centerX = width / 2;
-    const centerY = height / 2;
-
-    const svg = document.getElementById("radar-chart");
-
-    const axes = data.map((d, i) => {
-      const angle = (Math.PI * 2 * i) / data.length;
-      const x = centerX + Math.cos(angle) * 100;
-      const y = centerY + Math.sin(angle) * 100;
-      return { x, y };
-    });
-
-    const lines = data.map(d => {
-      const angle = (Math.PI * 2 * data.indexOf(d)) / data.length;
-      const length = (d.amount / 100) * 100;
-      const x = centerX + Math.cos(angle) * length;
-      const y = centerY + Math.sin(angle) * length;
-      return { x, y };
-    });
-
-    axes.forEach(axe => {
-      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute("x1", centerX);
-      line.setAttribute("y1", centerY);
-      line.setAttribute("x2", axe.x);
-      line.setAttribute("y2", axe.y);
-      line.setAttribute("stroke", "#ccc");
-      svg.appendChild(line);
-    });
-
-    const radarLine = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    radarLine.setAttribute("points", lines.map(point => `${point.x},${point.y}`).join(" "));
-    radarLine.setAttribute("fill", "steelblue");
-    radarLine.setAttribute("fill-opacity", "0.5");
-    svg.appendChild(radarLine);
-
-    data.forEach((d, i) => {
-      const angle = (Math.PI * 2 * i) / data.length;
-      const labelX = centerX + Math.cos(angle) * 120;
-      const labelY = centerY + Math.sin(angle) * 120;
-      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      label.setAttribute("x", labelX);
-      label.setAttribute("y", labelY);
-      label.setAttribute("text-anchor", "middle");
-      label.textContent = d.type;
-      svg.appendChild(label);
-    });
-}
