@@ -24,7 +24,7 @@ async function loginFetch() {
       password: password.value,
     };
 
-    const base64Credentials = btoa(
+    const base64Credentials = encodeBase64(
       `${credentials.login}:${credentials.password}`
     );
 
@@ -63,4 +63,23 @@ async function loginFetch() {
   } catch (error) {
     console.error("Erreur lors de la requête POST :", error);
   }
+}
+
+function encodeBase64(str) {
+  var encoder = new TextEncoder();
+  var byteArray = encoder.encode(str);
+
+  var base64String = arrayBufferToBase64(byteArray);
+
+  return base64String;
+}
+
+function arrayBufferToBase64(buffer) {
+  var binary = '';
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
 }
