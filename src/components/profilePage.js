@@ -11,7 +11,7 @@ export const profilePage = () => {
         <img src="./styles/assets/senegalIcon.png" alt="" srcset="">
         <h3 class="campus">Dakar</h3>
     </div>
-    <div class="profilInfo">
+    <div class="profilInfo logoutBtn">
         <img src="./styles/assets/logout.png" alt="" srcset="">
         <h3 class="logout">Logout</h3>
     </div>

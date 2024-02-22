@@ -41,7 +41,7 @@ export const fetchData = (jwt) => {
                     element.level.forEach((el) => {
                         level.innerHTML = el.level
                     })
-                    console.log(data.data.transaction_aggregate.nodes);
+                    // console.log(data.data.transaction_aggregate.nodes);
                     createTab(data.data.transaction_aggregate.nodes)
                 });
                 let XPval = data.data.transaction_aggregate.aggregate.sum.amount / 1000;
@@ -52,8 +52,10 @@ export const fetchData = (jwt) => {
                 createSVGGraph(data.data.transaction_aggregate.nodes)
                 const aggregatedData = aggregateSkills(data.data.skills);
                 chartRadar(aggregatedData)
-                console.log(data.data.upRatio.aggregate.sum.amount);
-                console.log(data.data.downRatio.aggregate.sum.amount);
+                // console.log(data.data.upRatio.aggregate.sum.amount);
+                // console.log(data.data.downRatio.aggregate.sum.amount);
+
+                
             })
             .catch((error) => {
                 reject(error);
@@ -74,7 +76,6 @@ const infoUserConnect = (
     let gitea = document.querySelector(".username");
     let campusDiv = document.querySelector(".campus");
     let ratio = document.querySelector(".ratio");
-    let level = document.querySelector(".level")
     nameUser.innerHTML = firstName + " " + lastName + " @" + userName;
     gitea.innerHTML = " @" + userName;
     campusDiv.innerHTML = campus;

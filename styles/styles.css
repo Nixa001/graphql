@@ -110,9 +110,9 @@ header {
   cursor: pointer;
 }
 
-.profilInfo:hover {
-  color: var(--text-100);
-  background: var(--hover);
+.logoutBtn:hover {
+  color: #171821;
+  background: var(--primary-200);
   border-radius: 5px;
 }
 
@@ -161,6 +161,9 @@ section {
   min-width: 250px;
 
 }
+.contentDiv1 img{
+  width: 70px;
+}
 
 .secondSection {
   flex-direction: row-reverse;
@@ -206,7 +209,7 @@ section {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   h2 {
@@ -214,11 +217,11 @@ section {
   }
 }
 
-
 .sectionDiv:hover,
 .sectionDiv2:hover {
   background: #171821a8;
 
+  cursor: pointer;
   .cart:hover {
     background: #171821ec;
   }

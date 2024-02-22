@@ -1,6 +1,7 @@
 import { loginLayout } from "../components/loginPage.js";
 import { profilePage } from "../components/profilePage.js";
 import { fetchData } from "./fetchData.js";
+import { deleteCookie, setCookie } from "./utils.js";
 
 export const loginHandler = () => {
   let body = document.querySelector("body");
@@ -38,9 +39,17 @@ async function loginFetch() {
     const data = await response.json();
 
     if (!data.error) {
-      console.log(data);
+
+      setCookie("Token", data, 1)
       let body = document.querySelector("body")
       body.innerHTML = profilePage()
+
+
+      document.querySelector('.logoutBtn').addEventListener('click', function () {
+        deleteCookie('Token')
+        loginHandler()
+      });
+
       fetchData(data)
     } else {
       const error = document.querySelector(".errorMsg");
