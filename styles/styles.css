@@ -180,9 +180,10 @@ section {
 
 .div1SecondSection {
   padding: 20px 50px;
+  overflow: scroll;
 }
 .div2SecondSection {
-  padding: 20px 0px;
+  padding: 0px 0px;
 }
 
 .div1SecondSection,

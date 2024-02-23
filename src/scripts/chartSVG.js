@@ -14,6 +14,7 @@ export const createTab = (projetValides) => {
         nameProject.innerText = name
         xp.innerHTML = projet.amount / 1000
         state.innerHTML = "Success"
+        state.style.color = "#17ae3e"
         if (projet.amount > 999) {
 
             line.appendChild(rank)
