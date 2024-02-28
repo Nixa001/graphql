@@ -73,7 +73,8 @@ body {
   background-color: var(--backgroundColor);
   background-size: cover;
   background-image: url(./assets/bg.svg);
-  /* overflow: hidden; */
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding: 10px;
 }
 
